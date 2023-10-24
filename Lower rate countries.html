@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cybercrime Rates in the World</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #mapid { height: 600px; }
+        .legend { line-height: 18px; color: #555; position: absolute; right: 10px; bottom: 30px; background: white; padding: 10px; }
+        .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+    </style>
+</head>
+
+<body>
+
+    <h2>Lowest Rates in the world </h2>
+    <p>The lowest Crime Rate in the world is being displayed where the top five countries having the crime rate less than 30% is shown. In these specific countries shown in the map the crime rate happens to be between the range 15%-28% of the total people's population of their respective countries.In each country there is assignned a crime rate score varying between 0%-70% and if the countries crime rate score is considered less than 30%,those specific countries are less likely to have a cybercrime attack.The cybercrime stastics also show how the cybercrime attack rate decreases throughout the years of these specific countries. </p>
+
+    <div id="mapid"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Function to set color based on cybercrime rate
+        function getColor(d) {
+            return d > 60 ? '#800026' :
+                   d > 50  ? '#BD0026' :
+                   d > 40  ? '#E31A1C' :
+                   d > 30  ? '#FC4E2A' :
+                   d > 20   ? '#FD8D3C' :
+                   d > 10   ? '#FEB24C' :
+                              '#FED976';
+        }
+
+        var mymap = L.map('mapid').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        var countries = [
+            { name: "Canada", location: [56.1304, -106.3468], cybercrimeRate: 28, description: "A North American country known for its natural beauty, vast landscapes, and cultural diversity." },
+            { name: "Japan", location: [36.2048, 138.2529], cybercrimeRate: 20, description: "An island country in East Asia known for its technological advancements, rich culture, and unique traditions." },
+            { name: "South Africa", location: [-30.5595, 22.9375], cybercrimeRate: 25, description: "A country at the southernmost tip of Africa known for its diverse wildlife, natural beauty, and cultural diversity." },
+            { name: "America", location: [37.0902, -95.7129], cybercrimeRate: 23, description: "A highly developed country in North America known for its economic and technological advancements." },
+            { name: "Australia", location: [-25.2744, 133.7751], cybercrimeRate: 15, description: "A country and continent surrounded by the Indian and Pacific oceans, known for its diverse landscapes and wildlife." }
+        ];
+
+        // Adding markers with custom colors and information
+        for (var i = 0; i < countries.length; i++) {
+            var country = countries[i];
+            var color = getColor(country.cybercrimeRate);
+            L.circleMarker(country.location, {
+                color: 'white',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10
+            }).addTo(mymap).bindPopup(`<b>${country.name}</b><br>Cybercrime Rate: ${country.cybercrimeRate}%<br>Description: ${country.description}`).openPopup();
+        }
+
+        // Adding a legend
+        var legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'legend');
+            var labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60+"];
+            var grades = [10, 20, 30, 40, 50, 60, 70];
+            var colors = ['#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
+
+            // Loop through our intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colors[i] + '"></i> ' +
+                    labels[i] + '<br>';
+            }
+
+            return div;
+        };
+
+        legend.addTo(mymap);
+
+    </script>
+</body>
+
+</html>
