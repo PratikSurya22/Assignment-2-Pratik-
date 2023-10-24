@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Cybercrime Rates in the World",
+  "data": {
+    "values": [
+      {"country": "India", "rate": 45},
+      {"country": "America", "rate": 23},
+      {"country": "United Kingdom", "rate": 70},
+      {"country": "Australia", "rate": 15},
+      {"country": "Malaysia", "rate": 30},
+      {"country": "Brazil", "rate": 55},
+      {"country": "Germany", "rate": 35},
+      {"country": "Russia", "rate": 65},
+      {"country": "South Africa", "rate": 25},
+      {"country": "Japan", "rate": 20},
+      {"country": "France", "rate": 60},
+      {"country": "Mexico", "rate": 45},
+      {"country": "Canada", "rate": 28},
+      {"country": "Italy", "rate": 50}
+    ]
+  },
+  "transform": [{"calculate": "datum.rate + ' %'", "as": "ratePercentage"}],
+  "selection": {
+    "slider": {
+      "type": "single",
+      "fields": ["rate"],
+      "bind": {"input": "range", "min": 0, "max": 70, "step": 1}
+    },
+    "country_dropdown": {
+      "type": "single",
+      "fields": ["country"],
+      "bind": {
+        "input": "select",
+        "options": [
+          "India",
+          "America",
+          "United Kingdom",
+          "Australia",
+          "Malaysia",
+          "Brazil",
+          "Germany",
+          "Russia",
+          "South Africa",
+          "Japan",
+          "France",
+          "Mexico",
+          "Canada",
+          "Italy"
+        ]
+      }
+    }
+  },
+  "mark": {"type": "bar", "tooltip": true},
+  "encoding": {
+    "x": {"field": "country", "type": "ordinal"},
+    "y": {"field": "rate", "type": "quantitative"},
+    "color": {
+      "field": "country",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "India",
+          "America",
+          "United Kingdom",
+          "Australia",
+          "Malaysia",
+          "Brazil",
+          "Germany",
+          "Russia",
+          "South Africa",
+          "Japan",
+          "France",
+          "Mexico",
+          "Canada",
+          "Italy"
+        ],
+        "range": [
+          "#1f77b4",
+          "#ff7f0e",
+          "#2ca02c",
+          "#d62728",
+          "#9467bd",
+          "#8c564b",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+          "#aec7e8",
+          "#ffbb78",
+          "#98df8a",
+          "#ff9896"
+        ]
+      }
+    },
+    "text": {"field": "ratePercentage", "type": "nominal"},
+    "opacity": {
+      "condition": {"selection": "country_dropdown", "value": 1},
+      "value": 0.3
+    }
+  },
+  "config": {}
+}
