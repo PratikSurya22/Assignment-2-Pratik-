@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rates of each country</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+<body>
+    <div>
+        <h2>Effects of each country </h2>
+        <p>The cybercrime rates of each country show the statistics describing which country shows the most cybercrime rate and the lowest cybercrime rate. As you can see from the graph, the highest rate happens to be United Kingdom (70%) and the lowest happens to be Australia (15%). This data shows that no matter the cybercrime rate, the economic conditions of the country are still affected by the rate of cybercrime happening around. The damage done is affecting individuals, businesses, and societies on a large scale.</p>
+    </div>
+    <div id="vis"></div>
+    <script>
+        const yourVlSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "Rates of each Country",
+            "data": {
+                "values": [
+                    {"country": "India", "rate": 45},
+                    {"country": "America", "rate": 23},
+                    {"country": "United Kingdom", "rate": 70},
+                    {"country": "Australia", "rate": 15},
+                    {"country": "Malaysia", "rate": 30},
+                    {"country": "Brazil", "rate": 55},
+                    {"country": "Germany", "rate": 35},
+                    {"country": "Russia", "rate": 65},
+                    {"country": "South Africa", "rate": 25},
+                    {"country": "Japan", "rate": 20},
+                    {"country": "France", "rate": 60},
+                    {"country": "Mexico", "rate": 45},
+                    {"country": "Canada", "rate": 28},
+                    {"country": "Italy", "rate": 50}
+                ]
+            },
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "country", "type": "ordinal"},
+                "y": {"field": "rate", "type": "quantitative"},
+                "color": {
+                    "field": "country",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["India", "America", "United Kingdom", "Australia", "Malaysia", "Brazil", "Germany", "Russia", "South Africa", "Japan", "France", "Mexico", "Canada", "Italy"],
+                        "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "country", "type": "nominal"},
+                    {"field": "rate", "type": "quantitative"}
+                ]
+            }
+        };
+
+        const embedOpt = {"mode": "vega-lite"};
+
+        // Embed the visualization in the container with id `vis`
+        const el = document.getElementById('vis');
+        vegaEmbed('#vis', yourVlSpec, embedOpt).then(function (result) {
+            // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+            // You can add more custom logic here
+        }).catch(console.error);
+    </script>
+</body>
+
+</html>
