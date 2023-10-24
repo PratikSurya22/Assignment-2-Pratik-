@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Comparison of cybercrime rate in different countries",
+  "data": {
+    "values": [
+      {"rate": 45, "country": "India"},
+      {"rate": 23, "country": "America"},
+      {"rate": 70, "country": "United Kingdom"},
+      {"rate": 15, "country": "Australia"},
+      {"rate": 30, "country": "Malaysia"},
+      {"rate": 55, "country": "Brazil"},
+      {"rate": 35, "country": "Germany"},
+      {"rate": 65, "country": "Russia"},
+      {"rate": 25, "country": "South Africa"},
+      {"rate": 20, "country": "Japan"},
+      {"rate": 60, "country": "France"},
+      {"rate": 45, "country": "Mexico"},
+      {"rate": 28, "country": "Canada"},
+      {"rate": 50, "country": "Italy"}
+    ]
+  },
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {"field": "country", "type": "nominal", "title": "Country"},
+    "y": {"field": "rate", "type": "quantitative", "title": "Cybercrime Rate"}
+  },
+  "width": 600,
+  "height": 400,
+  "config": {}
+}
