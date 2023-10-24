@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cybercrime Rate Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+<body>
+<h1>Decline in cybercrime Rate</h1>
+<p>Finally inspecting and investigating throughout the years it has been noticed that the cybercrime rates in the world is decreasing. It has been shown that one in many countries have experienced cyberattacks drastically but have shown improvement in the evolving years and many countries cybercrime rate have gone down 50% or less. From the statistics it is shown that between the years 2020-2023 cyberattacks have been improving and that of the rate going below 50%. Therefore we can say that by implementing good strategies, organizations and governments we can significantly enhance the cybersecurity posture and better protect from the growing threat of cybercrime.
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+        const yourVlSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "Comparison of cybercrime rate in different countries",
+            "data": {
+                "values": [
+                    {"rate": 45, "country": "India"},
+                    {"rate": 23, "country": "America"},
+                    {"rate": 70, "country": "United Kingdom"},
+                    {"rate": 15, "country": "Australia"},
+                    {"rate": 30, "country": "Malaysia"},
+                    {"rate": 55, "country": "Brazil"},
+                    {"rate": 35, "country": "Germany"},
+                    {"rate": 65, "country": "Russia"},
+                    {"rate": 25, "country": "South Africa"},
+                    {"rate": 20, "country": "Japan"},
+                    {"rate": 60, "country": "France"},
+                    {"rate": 45, "country": "Mexico"},
+                    {"rate": 28, "country": "Canada"},
+                    {"rate": 50, "country": "Italy"}
+                ]
+            },
+            "mark": {"type": "line", "point": true},
+            "encoding": {
+                "x": {"field": "country", "type": "nominal", "title": "Country"},
+                "y": {"field": "rate", "type": "quantitative", "title": "Cybercrime Rate"}
+            },
+            "width": 600,
+            "height": 400
+        };
+
+        vegaEmbed('#vis', yourVlSpec);
+    </script>
+</body>
+
+</html>
