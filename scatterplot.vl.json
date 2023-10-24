@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Comparison of cybercrime rate through the years",
+  "data": {
+    "values": [
+      {"year": 2010, "rate": 45, "country": "India"},
+      {"year": 2011, "rate": 23, "country": "America"},
+      {"year": 2012, "rate": 70, "country": "United Kingdom"},
+      {"year": 2013, "rate": 15, "country": "Australia"},
+      {"year": 2014, "rate": 30, "country": "Malaysia"},
+      {"year": 2015, "rate": 55, "country": "Brazil"},
+      {"year": 2016, "rate": 35, "country": "Germany"},
+      {"year": 2017, "rate": 65, "country": "Russia"},
+      {"year": 2018, "rate": 25, "country": "South Africa"},
+      {"year": 2019, "rate": 20, "country": "Japan"},
+      {"year": 2020, "rate": 60, "country": "France"},
+      {"year": 2021, "rate": 45, "country": "Mexico"},
+      {"year": 2022, "rate": 28, "country": "Canada"},
+      {"year": 2023, "rate": 50, "country": "Italy"}
+    ]
+  },
+  "mark": {"type": "point", "filled": true, "shape": "circle"},
+  "encoding": {
+    "x": {"field": "year", "type": "ordinal", "title": "Year"},
+    "y": {"field": "rate", "type": "quantitative", "title": "Cybercrime Rate"},
+    "color": {
+      "field": "country",
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "#1f77b4",
+          "#ff7f0e",
+          "#2ca02c",
+          "#d62728",
+          "#9467bd",
+          "#8c564b",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+          "#aec7e8",
+          "#ffbb78",
+          "#98df8a"
+        ]
+      }
+    }
+  },
+  "config": {}
+}
