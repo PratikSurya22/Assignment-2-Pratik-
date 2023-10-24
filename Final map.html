@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cybercrime Rates in the World</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #mapid { height: 600px; }
+        .legend { line-height: 18px; color: #555; position: absolute; right: 10px; bottom: 30px; background: white; padding: 10px; }
+        .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+    </style>
+</head>
+
+<body>
+
+    <h2>Cybercrime Rates in the World</h2>
+    <p>Explore the cybercrime rates in various countries across the globe. The map displays different countries with their respective cybercrime rates indicated by marker colors. The colors are indicative of the severity of cybercrime, with darker shades representing higher rates. The map displays the cybercrime rate for each country and how it has affected the country drastically. The cybercrime rate statistics show that there are 2,200 attacks per day, with a cyberattack happening every 39 seconds on average. These cyberattacks have affected every country economically. The map shows the different rates of cyberattack in each country.  </p>
+
+    <div id="mapid"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Function to set color based on cybercrime rate
+        function getColor(d) {
+            return d > 60 ? '#800026' :
+                   d > 50  ? '#BD0026' :
+                   d > 40  ? '#E31A1C' :
+                   d > 30  ? '#FC4E2A' :
+                   d > 20   ? '#FD8D3C' :
+                   d > 10   ? '#FEB24C' :
+                              '#FED976';
+        }
+
+        var mymap = L.map('mapid').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        var countries = [ { name: "India", location: [20.5937, 78.9629], cybercrimeRate: 45, description: "A densely populated country in South Asia known for its diverse culture and rich history." },
+            { name: "United States", location: [37.0902, -95.7129], cybercrimeRate: 23, description: "A highly developed country in North America known for its economic and technological advancements." },
+            { name: "United Kingdom", location: [55.3781, -3.4360], cybercrimeRate: 70, description: "A country in Europe known for its rich history, cultural heritage, and global influence." },
+            { name: "Australia", location: [-25.2744, 133.7751], cybercrimeRate: 15, description: "A country and continent surrounded by the Indian and Pacific oceans, known for its diverse landscapes and wildlife." },
+            { name: "Malaysia", location: [4.2105, 101.9758], cybercrimeRate: 30, description: "A Southeast Asian country known for its beaches, rainforests, and diverse cultural influences." },
+            { name: "Brazil", location: [-14.2350, -51.9253], cybercrimeRate: 55, description: "The largest country in South America, known for its vibrant culture, Amazon rainforest, and lively cities." },
+            { name: "China", location: [35.8617, 104.1954], cybercrimeRate: 50, description: "The most populous country in the world, known for its rich history, diverse culture, and rapid economic growth." },
+            { name: "Nigeria", location: [9.0820, 8.6753], cybercrimeRate: 40, description: "A country in West Africa known for its diverse culture, bustling cities, and natural landmarks." },
+            { name: "Germany", location: [51.1657, 10.4515], cybercrimeRate: 35, description: "A country in central Europe known for its historic landmarks, vibrant cities, and cultural festivals." },
+            { name: "Russia", location: [61.5240, 105.3188], cybercrimeRate: 65, description: "The largest country in the world, known for its rich cultural heritage, diverse landscapes, and historical significance." },
+            { name: "South Africa", location: [-30.5595, 22.9375], cybercrimeRate: 25, description: "A country at the southernmost tip of Africa known for its diverse wildlife, natural beauty, and cultural diversity." },
+            { name: "Japan", location: [36.2048, 138.2529], cybercrimeRate: 20, description: "An island country in East Asia known for its technological advancements, rich culture, and unique traditions." },
+            { name: "France", location: [46.2276, 2.2137], cybercrimeRate: 60, description: "A country in Western Europe known for its art, fashion, cuisine, and historical landmarks." },
+            { name: "Mexico", location: [23.6345, -102.5528], cybercrimeRate: 45, description: "A country in North America known for its rich heritage, ancient ruins, and vibrant festivals." },
+            { name: "Canada", location: [56.1304, -106.3468], cybercrimeRate: 28, description: "A North American country known for its natural beauty, vast landscapes, and cultural diversity." },
+            { name: "Italy", location: [41.8719, 12.5674], cybercrimeRate: 50, description: "A country in Southern Europe known for its rich history, art, architecture, and culinary traditions." },
+        ];
+
+        // Adding markers with custom colors and information
+        for (var i = 0; i < countries.length; i++) {
+            var country = countries[i];
+            var color = getColor(country.cybercrimeRate);
+            L.circleMarker(country.location, {
+                color: 'white',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10
+            }).addTo(mymap).bindPopup(`<b>${country.name}</b><br>Cybercrime Rate: ${country.cybercrimeRate}%<br>Description: ${country.description}`).openPopup();
+        }
+
+        // Adding a legend
+        var legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'legend');
+            var labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60+"];
+            var grades = [10, 20, 30, 40, 50, 60, 70];
+            var colors = ['#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
+
+            // Loop through our intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colors[i] + '"></i> ' +
+                    labels[i] + '<br>';
+            }
+
+            return div;
+        };
+
+        legend.addTo(mymap);
+
+    </script>
+</body>
+
+</html>
