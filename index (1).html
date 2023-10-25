@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cybercrime Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+
+<body>
+    <h2>Cybercrime Rates in the World</h2>
+    <p>Explore the cybercrime rates in various countries across the globe. The map displays different countries with their respective cybercrime rates indicated by marker colors. The colors are indicative of the severity of cybercrime, with darker shades representing higher rates. The map displays the cybercrime rate for each country and how it has affected the country drastically. The cybercrime rate statistics show that there are 2,200 attacks per day, with a cyberattack happening every 39 seconds on average. These cyberattacks have affected every country economically. The map shows the different rates of cyberattack in each country.</p>
+    <div id="mapid" style="height: 600px;"></div>
+    <div class="legend" style="line-height: 18px; color: #555; position: absolute; right: 10px; bottom: 30px; background: white; padding: 10px;">
+        <i style="background:#FED976"></i> 0-10<br>
+        <i style="background:#FEB24C"></i> 10-20<br>
+        <i style="background:#FD8D3C"></i> 20-30<br>
+        <i style="background:#FC4E2A"></i> 30-40<br>
+        <i style="background:#E31A1C"></i> 40-50<br>
+        <i style="background:#BD0026"></i> 50-60<br>
+        <i style="background:#800026"></i> 60+
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var mymap = L.map('mapid').setView([20, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        var countries = [
+            { name: "Canada", location: [56.1304, -106.3468], cybercrimeRate: 28, description: "A North American country known for its natural beauty, vast landscapes, and cultural diversity." },
+            { name: "Japan", location: [36.2048, 138.2529], cybercrimeRate: 20, description: "An island country in East Asia known for its technological advancements, rich culture, and unique traditions." },
+            { name: "South Africa", location: [-30.5595, 22.9375], cybercrimeRate: 25, description: "A country at the southernmost tip of Africa known for its diverse wildlife, natural beauty, and cultural diversity." },
+            { name: "America", location: [37.0902, -95.7129], cybercrimeRate: 23, description: "A highly developed country in North America known for its economic and technological advancements." },
+            { name: "Australia", location: [-25.2744, 133.7751], cybercrimeRate: 15, description: "A country and continent surrounded by the Indian and Pacific oceans, known for its diverse landscapes and wildlife." }
+        ];
+
+        function getColor(d) {
+            return d > 60 ? '#800026' :
+                d > 50 ? '#BD0026' :
+                d > 40 ? '#E31A1C' :
+                d > 30 ? '#FC4E2A' :
+                d > 20 ? '#FD8D3C' :
+                d > 10 ? '#FEB24C' :
+                '#FED976';
+        }
+
+        countries.forEach(function (country) {
+            var color = getColor(country.cybercrimeRate);
+            L.circleMarker(country.location, {
+                color: 'white',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10
+            }).addTo(mymap).bindPopup(`<b>${country.name}</b><br>Cybercrime Rate: ${country.cybercrimeRate}%<br>Description: ${country.description}`).openPopup();
+        });
+    </script>
+
+    <h2>Effects of each country</h2>
+    <p>The cybercrime rates of each country show the statistics describing which country shows the most cybercrime rate and the lowest cybercrime rate. As you can see from the graph, the highest rate happens to be United Kingdom (70%) and the lowest happens to be Australia (15%). This data shows that no matter the cybercrime rate, the economic conditions of the country are still affected by the rate of cybercrime happening around. The damage done is affecting individuals, businesses, and societies on a large scale.</p>
+    <div id="vis1" style="height: 400px; width: 600px;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script>
+        const yourVlSpec1 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "Rates of each Country",
+            "data": {
+                "values": [
+                    {"country": "India", "rate": 45},
+                    {"country": "America", "rate": 23},
+                    {"country": "United Kingdom", "rate": 70},
+                    {"country": "Australia", "rate": 15},
+                    {"country": "Malaysia", "rate": 30},
+                    {"country": "Brazil", "rate": 55},
+                    {"country": "Germany", "rate": 35},
+                    {"country": "Russia", "rate": 65},
+                    {"country": "South Africa", "rate": 25},
+                    {"country": "Japan", "rate": 20},
+                    {"country": "France", "rate": 60},
+                    {"country": "Mexico", "rate": 45},
+                    {"country": "Canada", "rate": 28},
+                    {"country": "Italy", "rate": 50}
+                ]
+            },
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "country", "type": "ordinal"},
+                "y": {"field": "rate", "type": "quantitative"},
+                "color": {
+                    "field": "country",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["India", "America", "United Kingdom", "Australia", "Malaysia", "Brazil", "Germany", "Russia", "South Africa", "Japan", "France", "Mexico", "Canada", "Italy"],
+                        "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "country", "type": "nominal"},
+                    {"field": "rate", "type": "quantitative"}
+                ]
+            }
+        };
+
+        const embedOpt1 = {"mode": "vega-lite"};
+
+        vegaEmbed('#vis1', yourVlSpec1, embedOpt1);
+    </script>
+
+    <h2>Cybercrime Rate Comparison</h2>
+    <p>This scatter plot shows the comparison of cybercrime rates in different countries over the years. As you can see from the graph, one interesting fact is that the cybercrime rate in each year is fluctuating, which shows that the cybercrime rate increases with a rate of 40% each year, spiking up the rate in each country present in that year. As you can see, the highest cybercrime rate was present in the year 2012, spiking up to a value of 70% of the total people's population in the country United Kingdom. It shows us that out of the total population of the United Kingdom, which was 63.7 million, 70% of the people were affected by this cybercrime happening around them.</p>
+    <div id="vis2" style="height: 400px; width: 600px;"></div>
+
+    <script>
+        const yourVlSpec2 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "Comparison of cybercrime rate in different countries",
+            "data": {
+                "values": [
+                    {"rate": 45, "country": "India"},
+                    {"rate": 23, "country": "America"},
+                    {"rate": 70, "country": "United Kingdom"},
+                    {"rate": 15, "country": "Australia"},
+                    {"rate": 30, "country": "Malaysia"},
+                    {"rate": 55, "country": "Brazil"},
+                    {"rate": 35, "country": "Germany"},
+                    {"rate": 65, "country": "Russia"},
+                    {"rate": 25, "country": "South Africa"},
+                    {"rate": 20, "country": "Japan"},
+                    {"rate": 60, "country": "France"},
+                    {"rate": 45, "country": "Mexico"},
+                    {"rate": 28, "country": "Canada"},
+                    {"rate": 50, "country": "Italy"}
+                ]
+            },
+            "mark": {"type": "line", "point": true},
+            "encoding": {
+                "x": {"field": "country", "type": "nominal", "title": "Country"},
+                "y": {"field": "rate", "type": "quantitative", "title": "Cybercrime Rate"}
+            },
+            "width": 600,
+            "height": 400
+        };
+
+        const embedOpt2 = {"mode": "vega-lite"};
+
+        vegaEmbed('#vis2', yourVlSpec2, embedOpt2);
+    </script>
+
+    <h2>Lowest Rates in the world </h2>
+    <p>The lowest Crime Rate in the world is being displayed where the top five countries having the crime rate less than 30% is shown. In these specific countries shown on the map, the crime rate happens to be between the range 15%-28% of the total people's population of their respective countries. In each country, a crime rate score varying between 0%-70% is assigned, and if the country's crime rate score is considered less than 30%, those specific countries are less likely to have a cybercrime attack. The cybercrime statistics also show how the cybercrime attack rate decreases throughout the years of these specific countries. </p>
+
+    <div id="mapid2" style="height: 600px;"></div>
+
+    <script>
+        // Function to set color based on cybercrime rate
+        function getColor(d) {
+            return d > 60 ? '#800026' :
+                   d > 50  ? '#BD0026' :
+                   d > 40  ? '#E31A1C' :
+                   d > 30  ? '#FC4E2A' :
+                   d > 20   ? '#FD8D3C' :
+                   d > 10   ? '#FEB24C' :
+                              '#FED976';
+        }
+
+        var mymap2 = L.map('mapid2').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(mymap2);
+
+        var countries2 = [
+            { name: "Canada", location: [56.1304, -106.3468], cybercrimeRate: 28, description: "A North American country known for its natural beauty, vast landscapes, and cultural diversity." },
+            { name: "Japan", location: [36.2048, 138.2529], cybercrimeRate: 20, description: "An island country in East Asia known for its technological advancements, rich culture, and unique traditions." },
+            { name: "South Africa", location: [-30.5595, 22.9375], cybercrimeRate: 25, description: "A country at the southernmost tip of Africa known for its diverse wildlife, natural beauty, and cultural diversity." },
+            { name: "America", location: [37.0902, -95.7129], cybercrimeRate: 23, description: "A highly developed country in North America known for its economic and technological advancements." },
+            { name: "Australia", location: [-25.2744, 133.7751], cybercrimeRate: 15, description: "A country and continent surrounded by the Indian and Pacific oceans, known for its diverse landscapes and wildlife." }
+        ];
+
+        // Adding markers with custom colors and information
+        for (var i = 0; i < countries2.length; i++) {
+            var country = countries2[i];
+            var color = getColor(country.cybercrimeRate);
+            L.circleMarker(country.location, {
+                color: 'white',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10
+            }).addTo(mymap2).bindPopup(`<b>${country.name}</b><br>Cybercrime Rate: ${country.cybercrimeRate}%<br>Description: ${country.description}`).openPopup();
+        }
+    </script>
+</body>
+
+</html>
